@@ -499,3 +499,7 @@ What is digital twin technology?,"A digital twin is a virtual replica of a physi
 What is edge computing?,"Edge computing processes data near its source rather than relying on centralized cloud servers, reducing latency."
 What is IoT in AI applications?,"IoT (Internet of Things) connects physical devices that generate data, which AI systems can analyze for automation and insights."
 What is a knowledge graph?,"A knowledge graph represents entities and their relationships as a network, enabling structured reasoning and search."
+What is NLP?,"Natural Language Processing (NLP) is a field of AI focused on enabling computers to understand, interpret, and generate human language."
+Difference between CNN and RNN.,"CNNs are specialized for processing spatial data like images, while RNNs are designed for sequential data like text or time series."
+What is deep learning vs machine learning?,"Machine learning uses data-driven algorithms to learn from data, while deep learning is a subset of ML that specifically uses multi-layer neural networks to learn complex patterns."
+What is Machine Learning?,"Machine learning uses data-driven algorithms to learn from data, make predictions, and discover hidden patterns without being explicitly programmed."

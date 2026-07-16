@@ -13,22 +13,29 @@ faq = pd.read_csv("ai_ml_ds_professor_faq_500.csv")
 
 # ✅ Chatbot logic
 def chatbot(query):
-    # Standardize input string format
-    cleaned_query = query.strip().lower()
+    # 1. Clean the incoming question (remove bullet dots, spaces, lowercase it)
+    cleaned_query = query.replace("•", "").replace("-", "").strip().lower()
     
-    # Map lowercase questions to their exact original casing for lookup
-    questions_dict = {str(q).strip().lower(): q for q in faq['question'].tolist()}
+    # 2. Build a lowercase mapping of your dataset
+    # format: { "what is machine learning?": "What is Machine Learning?" }
+    questions_dict = {
+        str(q).replace("•", "").replace("-", "").strip().lower(): q 
+        for q in faq['question'].tolist()
+    }
     
-    # 🎯 INCREASE CUTOFF TO 0.8 (80% similarity required)
-    # This prevents "Machine Learning" from matching "active learning"
-    match = get_close_matches(cleaned_query, list(questions_dict.keys()), n=1, cutoff=0.8)
-    
+    # 3. Check for an EXACT structural match first
+    if cleaned_query in questions_dict:
+        original_question = questions_dict[cleaned_query]
+        return faq.loc[faq['question'] == original_question, 'answer'].values[0]
+        
+    # 4. If it isn't an exact match, check for a close match with a strict 0.75+ cutoff
+    match = get_close_matches(cleaned_query, list(questions_dict.keys()), n=1, cutoff=0.75)
     if match:
         original_question = questions_dict[match[0]]
         return faq.loc[faq['question'] == original_question, 'answer'].values[0]
         
+    # 5. Fallback completely to Gemini if it's outside the FAQ scope
     try:
-        # If it's not a highly accurate match in the FAQ, let Gemini handle it perfectly!
         response = model.generate_content(query)
         return response.text
     except Exception:
